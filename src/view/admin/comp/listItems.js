@@ -20,7 +20,7 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
-    <Link to="/admin/dashboard/vaxtrack">
+    <Link to="/admin/dashboard/user">
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
@@ -28,7 +28,7 @@ export const mainListItems = (
         <ListItemText primary="Users" />
       </ListItem>
     </Link>
-    <Link to="/admin/dashboard/vaccines">
+    <Link to="/admin/dashboard/scooter">
     <ListItem button>
       <ListItemIcon>
         <ElectricScooterIcon />
@@ -36,7 +36,7 @@ export const mainListItems = (
       <ListItemText primary="Scooters" />
     </ListItem>
   </Link>
-  <Link to="/admin/dashboard/doses">
+  <Link to="/admin/dashboard/log">
     <ListItem button>
       <ListItemIcon>
         <TerminalIcon />
@@ -44,7 +44,7 @@ export const mainListItems = (
       <ListItemText primary="Logs" />
     </ListItem>
   </Link>
-  <Link to="/admin/dashboard/patients">
+  <Link to="/admin/dashboard/support">
     <ListItem button>
       <ListItemIcon>
         <SupportAgentIcon />

@@ -19,6 +19,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import {mainListItems } from './comp/listItems';
 import {Redirect, useHistory} from "react-router-dom";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import useSWR from 'swr';
 
 const drawerWidth = 240;
 
@@ -70,10 +71,10 @@ const mdTheme = createTheme();
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: theme.spacing(2),
   textAlign: 'center',
   color: theme.palette.text.secondary,
-  backgroundColor: 'red'
+  backgroundColor: 'red',
 }));
 
 export function DashboardTemplate({component: Component}) {
@@ -172,23 +173,27 @@ export function DashboardTemplate({component: Component}) {
 }
 
 function DashboardContent() {
+
+
   return(
     <>
-      <h1 align="center">Hello World {sessionStorage.getItem("username")}</h1>
-          <Grid container spacing={2}>
-      <Grid item xs={6} md={4}>
-        <Item>xs=6 md=8</Item>
-      </Grid>
-      <Grid item xs={6} md={4}>
-        <Item>xs=6 md=4</Item>
-      </Grid>
-      <Grid item xs={6} md={4}>
-        <Item>xs=6 md=4</Item>
-      </Grid>
-      <Grid item xs={6} md={4}>
-        <Item>xs=6 md=8</Item>
-      </Grid>
-    </Grid>
+      <h1 align="center">Hello World</h1>
+      <Box sx={{ width: '100%'}} >
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} align="center">
+          <Grid item xs={6}>
+              <h2>cities</h2>
+          </Grid>
+          <Grid item xs={6}>
+            <h2>scooters</h2>
+          </Grid>
+          <Grid item xs={6}>
+            <h2>logs</h2>
+          </Grid>
+          <Grid item xs={6}>
+            <h2>support</h2>
+          </Grid>
+        </Grid>
+    </Box>
     </>
   );
 }
