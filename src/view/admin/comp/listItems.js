@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 export const mainListItems = (
   <div>
-    <Link to="/admin/dashboard">
+    <Link to="/">
       <ListItem button>
         <ListItemIcon>
           <DashboardIcon />
@@ -20,7 +20,7 @@ export const mainListItems = (
         <ListItemText primary="Dashboard" />
       </ListItem>
     </Link>
-    <Link to="/admin/dashboard/user">
+    <Link to="/dashboard/user">
       <ListItem button>
         <ListItemIcon>
           <PeopleIcon />
@@ -28,7 +28,7 @@ export const mainListItems = (
         <ListItemText primary="Users" />
       </ListItem>
     </Link>
-    <Link to="/admin/dashboard/scooter">
+    <Link to="/dashboard/scooter">
     <ListItem button>
       <ListItemIcon>
         <ElectricScooterIcon />
@@ -36,7 +36,7 @@ export const mainListItems = (
       <ListItemText primary="Scooters" />
     </ListItem>
   </Link>
-  <Link to="/admin/dashboard/log">
+  <Link to="/dashboard/log">
     <ListItem button>
       <ListItemIcon>
         <TerminalIcon />
@@ -44,7 +44,7 @@ export const mainListItems = (
       <ListItemText primary="Logs" />
     </ListItem>
   </Link>
-  <Link to="/admin/dashboard/support">
+  <Link to="/dashboard/support">
     <ListItem button>
       <ListItemIcon>
         <SupportAgentIcon />

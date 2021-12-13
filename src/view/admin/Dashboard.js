@@ -19,7 +19,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import {mainListItems } from './comp/listItems';
 import {Redirect, useHistory} from "react-router-dom";
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import useSWR from 'swr';
 
 const drawerWidth = 240;
 
@@ -68,14 +67,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const mdTheme = createTheme();
-
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(2),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  backgroundColor: 'red',
-}));
 
 export function DashboardTemplate({component: Component}) {
   const [open, setOpen] = React.useState(true);
@@ -173,8 +164,6 @@ export function DashboardTemplate({component: Component}) {
 }
 
 function DashboardContent() {
-
-
   return(
     <>
       <h1 align="center">Hello World</h1>
