@@ -1,5 +1,5 @@
 import React from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 import useSWR from 'swr';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,9 +11,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { DashboardTemplate } from "../Dashboard";
 
 const fetcher = async () => {
-    const response = await fetch('http://localhost:1337/v1/user?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405');
-    const data = await response.json();
-    return data.data;
+    const response = await axios.get('http://localhost:1337/v1/auth/customer?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405', {
+        headers: {
+            'x-access-token': sessionStorage.getItem('token'),
+        }
+    });
+    return response.data.data;
 }
 
 function UserContent() {

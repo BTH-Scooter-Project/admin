@@ -7,6 +7,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import ElectricScooterIcon from '@mui/icons-material/ElectricScooter';
 import TerminalIcon from '@mui/icons-material/Terminal';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import { Link } from "react-router-dom";
 
@@ -50,6 +51,14 @@ export const mainListItems = (
         <SupportAgentIcon />
       </ListItemIcon>
       <ListItemText primary="Support" />
+    </ListItem>
+  </Link>
+  <Link to="/dashboard/location">
+    <ListItem button>
+      <ListItemIcon>
+        <LocationOnIcon />
+      </ListItemIcon>
+      <ListItemText primary="Locations" />
     </ListItem>
   </Link>
   </div>
