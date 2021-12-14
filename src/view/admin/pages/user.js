@@ -1,3 +1,5 @@
+import React from 'react';
+import Axios from 'axios';
 import useSWR from 'swr';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,7 +17,7 @@ const fetcher = async () => {
 }
 
 function UserContent() {
-    const { data, error } = useSWR('user', fetcher);
+    const { data } = useSWR('user', fetcher);
 
     return (
         <>

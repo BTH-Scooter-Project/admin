@@ -16,9 +16,10 @@ import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import {mainListItems } from './comp/listItems';
+import {mainListItems } from './components/listItems';
 import {Redirect, useHistory} from "react-router-dom";
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { BoxStat } from './components/styles';
 
 const drawerWidth = 240;
 
@@ -74,7 +75,7 @@ export function DashboardTemplate({component: Component}) {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  if (true) {
+  if (sessionStorage.getItem("token")) {
     return (
       <ThemeProvider theme={mdTheme}>
         <Box sx={{ display: 'flex' }}>
@@ -159,27 +160,38 @@ export function DashboardTemplate({component: Component}) {
       </ThemeProvider>
     );
     } else {
-        return <Redirect to="/login/admin"/>
+        return <Redirect to="/"/>
     }
 }
 
 function DashboardContent() {
   return(
     <>
-      <h1 align="center">Hello World</h1>
       <Box sx={{ width: '100%'}} >
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} align="center">
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 2, sm: 2, md: 2 }} align="center">
           <Grid item xs={6}>
-              <h2>cities</h2>
+              <BoxStat> 
+                <h2>10</h2>
+                <h3>Users</h3>
+              </BoxStat>
           </Grid>
           <Grid item xs={6}>
-            <h2>scooters</h2>
+          <BoxStat> 
+                <h2>10</h2>
+                <h3>Users</h3>
+              </BoxStat>
           </Grid>
           <Grid item xs={6}>
-            <h2>logs</h2>
+          <BoxStat> 
+                <h2>10</h2>
+                <h3>Users</h3>
+              </BoxStat>
           </Grid>
           <Grid item xs={6}>
-            <h2>support</h2>
+            <BoxStat> 
+                <h2>10</h2>
+                <h3>Users</h3>
+            </BoxStat>
           </Grid>
         </Grid>
     </Box>
