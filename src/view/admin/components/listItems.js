@@ -37,22 +37,6 @@ export const mainListItems = (
       <ListItemText primary="Scooters" />
     </ListItem>
   </Link>
-  <Link to="/dashboard/log">
-    <ListItem button>
-      <ListItemIcon>
-        <TerminalIcon />
-      </ListItemIcon>
-      <ListItemText primary="Logs" />
-    </ListItem>
-  </Link>
-  <Link to="/dashboard/support">
-    <ListItem button>
-      <ListItemIcon>
-        <SupportAgentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Support" />
-    </ListItem>
-  </Link>
   <Link to="/dashboard/location">
     <ListItem button>
       <ListItemIcon>

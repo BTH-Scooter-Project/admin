@@ -17,6 +17,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {mainListItems } from './components/listItems';
 import {Redirect, useHistory} from "react-router-dom";
 import { BoxStat } from './components/styles';
+import { Button } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -105,15 +106,11 @@ export function DashboardTemplate({component: Component}) {
               {sessionStorage.getItem('user')}
               </Typography>
               
-              <Typography 
-                  component="h1"
-                  variant="h6"
-                  color="inherit"
-                  noWrap
-                  onClick={() => {
-                  sessionStorage.clear();
-                  history.push('/');
-              }}>Log out</Typography>
+              <Button color="inherit" onClick={() => {
+                sessionStorage.clear();
+                history.push('/');
+                }}>Log out
+              </Button>
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open}>
@@ -170,7 +167,7 @@ function DashboardContent() {
           <Grid item xs={6}>
               <BoxStat> 
                 <h2>10</h2>
-                <h3>Users</h3>
+                <p>gewt</p>
               </BoxStat>
           </Grid>
           <Grid item xs={6}>

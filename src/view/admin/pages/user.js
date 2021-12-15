@@ -1,4 +1,5 @@
 import React from 'react';
+import  { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
 import Table from '@mui/material/Table';
@@ -16,11 +17,15 @@ const fetcher = async () => {
             'x-access-token': sessionStorage.getItem('token'),
         }
     });
-    return response.data.data;
+    const data = response.data.data
+    sessionStorage.setItem('apiCustomer', JSON.stringify(data));
+    return data;
 }
 
 function UserContent() {
     const { data } = useSWR('user', fetcher);
+    const history = useHistory();
+    console.log(data);
 
     return (
         <>
@@ -33,20 +38,24 @@ function UserContent() {
                         <TableCell>Email</TableCell>
                         <TableCell>City</TableCell>
                         <TableCell>Payment</TableCell>
+                        <TableCell>Balance</TableCell>
                         <TableCell>Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                   {(data || []).map((row) => (
+                   {(data || []).map((row, index) => (
                        <TableRow key={row.userid}>
                            <TableCell>{row.firstname}</TableCell>
                            <TableCell>{row.lastname}</TableCell>
                            <TableCell>{row.email}</TableCell>
                            <TableCell>{row.cityid}</TableCell>
                            <TableCell>{row.payment}</TableCell>
+                           <TableCell>{row.balance}</TableCell>
                            <TableCell>
-                               <VisibilityIcon />
-                               <DeleteIcon />
+                                <VisibilityIcon cursor="pointer" onClick={() => {
+                                    history.push(`/dashboard/user/${index}`);
+                                }}/>
+                                <DeleteIcon />
                            </TableCell>
                        </TableRow>
                    ))}
