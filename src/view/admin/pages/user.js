@@ -22,10 +22,21 @@ const fetcher = async () => {
     return data;
 }
 
+const remove = (id) => {
+    let result = window.confirm("Want to delete customer?");
+    if (result) {
+        axios.delete(`http://localhost:1337/v1/auth/customer/${id}?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`, {
+            headers: {
+                'x-access-token': sessionStorage.getItem('token'),
+            }
+        });
+        window.location.reload();
+    }
+}
+
 function UserContent() {
     const { data } = useSWR('user', fetcher);
     const history = useHistory();
-    console.log(data);
 
     return (
         <>
@@ -55,7 +66,9 @@ function UserContent() {
                                 <VisibilityIcon cursor="pointer" onClick={() => {
                                     history.push(`/dashboard/user/${index}`);
                                 }}/>
-                                <DeleteIcon />
+                                <DeleteIcon cursor="pointer" onClick={() => {
+                                    remove(row.userid);
+                                }}/>
                            </TableCell>
                        </TableRow>
                    ))}

@@ -4,8 +4,9 @@ import SignIn from './view/login';
 import Dashboard from './view/admin/Dashboard';
 import User from './view/admin/pages/user';
 import Scooter from './view/admin/pages/scooter';
-import Log from './view/admin/pages/log';
 import UserDetail from './view/admin/pages/userDetail';
+import City from './view/admin/pages/city';
+import Station from './view/admin/pages/station';
 
 function App() {
   return (
@@ -14,9 +15,9 @@ function App() {
        <Route path="/" exact component={SignIn} />
        <Route path="/dashboard" exact component={Dashboard} />
        <Route path="/dashboard/user" exact component={User} />
-       <Route path="/dashboard/scooter" component={Scooter} />
-       <Route path="/dashboard/log" component={Log} />
        <Route path="/dashboard/user/:id" component={UserDetail} />
+       <Route path="/dashboard/scooter" exact component={City} />
+       <Route path="/dashboard/scooter/city/:id" component={Station} />
      </Switch>
    </Router>
   );
