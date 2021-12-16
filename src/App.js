@@ -17,7 +17,9 @@ function App() {
        <Route path="/dashboard/user" exact component={User} />
        <Route path="/dashboard/user/:id" component={UserDetail} />
        <Route path="/dashboard/scooter" exact component={City} />
-       <Route path="/dashboard/scooter/city/:id" component={Station} />
+       <Route path="/dashboard/scooter/city/:id" exact component={Station} />
+       <Route path="/dashboard/scooter/city/:id/scooter" exact component={Scooter} />
+
      </Switch>
    </Router>
   );

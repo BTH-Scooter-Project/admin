@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import  { useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +8,6 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { DashboardTemplate } from "../Dashboard";
 
 const fetcher = async () => {
@@ -23,10 +23,11 @@ const fetcher = async () => {
 
 function CityContent() {
     const { data } = useSWR('scooter', fetcher);
+    const history = useHistory();
 
     return (
         <>
-            <h1 align="center">Scooters</h1>
+            <h1 align="center">Cities</h1>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -41,8 +42,9 @@ function CityContent() {
                             <TableCell>{row.cityid}</TableCell>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>
-                               <a href="/"><VisibilityIcon /></a>
-                               <a href="/"><DeleteIcon /></a>
+                                <VisibilityIcon cursor="pointer" onClick={() => {
+                                        history.push(`/dashboard/scooter/city/${row.cityid}`);
+                                    }}/>
                            </TableCell>
                        </TableRow>
                    ))}

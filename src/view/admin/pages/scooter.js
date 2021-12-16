@@ -7,7 +7,6 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { DashboardTemplate } from "../Dashboard";
 
 const fetcher = async () => {
@@ -25,27 +24,18 @@ function ScooterContent() {
 
     return (
         <>
-            <h1 align="center">Scooters</h1>
+            <h1 align="center">Scooters in {sessionStorage.getItem("apiStation")}</h1>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>CityID</TableCell>
                         <TableCell>Name</TableCell>
-                        <TableCell>Actions</TableCell>
+                        <TableCell>Description</TableCell>
+                        <TableCell>Status</TableCell>
+                        <TableCell>Battery</TableCell>
+                        <TableCell>GPS (lat)</TableCell>
+                        <TableCell>GPS (lon)</TableCell>
                     </TableRow>
                 </TableHead>
-                <TableBody>
-                   {(data || []).map((row) => (
-                       <TableRow key={row.cityid}>
-                            <TableCell>{row.cityid}</TableCell>
-                            <TableCell>{row.name}</TableCell>
-                            <TableCell>
-                               <a href="/"><VisibilityIcon /></a>
-                               <a href="/"><DeleteIcon /></a>
-                           </TableCell>
-                       </TableRow>
-                   ))}
-                </TableBody>
             </Table>
         </>
     );

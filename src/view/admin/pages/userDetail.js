@@ -8,12 +8,12 @@ function UserDetailContent() {
     const data = JSON.parse(sessionStorage.getItem("apiCustomer"))[id];
     return (
         <>
-            <p>Name: {data.firstname}</p>
-            <p>Lastname: {data.lastname}</p>
-            <p>Email: {data.email}</p>
-            <p>City: {data.cityid}</p>
-            <p>Payment: {data.payment}</p>
-            <p>Balance: {data.balance}</p>
+            <p><b>Name: </b>{data.firstname}</p>
+            <p><b>Lastname: </b>{data.lastname}</p>
+            <p><b>Email: </b>{data.email}</p>
+            <p><b>City: </b>{data.cityid}</p>
+            <p><b>Payment: </b>{data.payment}</p>
+            <p><b>Balance: </b>{data.balance}</p>
         </>
     );
 }
