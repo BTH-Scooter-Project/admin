@@ -6,28 +6,21 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { DashboardTemplate } from "../Dashboard";
-
-const fetcher = async () => {
-    const response = await axios.get('http://localhost:1337/v1/city?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405', {
-        headers: {
-            'x-access-token': sessionStorage.getItem('token'),
-        }
-    });
-    console.log(response);
-    return response.data.data;
-}
+import { useParams } from 'react-router';
 
 function ScooterContent() {
-    const { data } = useSWR('scooter', fetcher);
+    const id = useParams();
+    const data = JSON.parse(sessionStorage.getItem('apiStation'))[id.id];
+    console.log(data.bikes);
 
     return (
         <>
-            <h1 align="center">Scooters in {sessionStorage.getItem("apiStation")}</h1>
+            <h1 align="center">Scooters in {data.address}</h1>
             <Table>
                 <TableHead>
                     <TableRow>
+                        <TableCell>BikeID</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Description</TableCell>
                         <TableCell>Status</TableCell>
@@ -36,6 +29,23 @@ function ScooterContent() {
                         <TableCell>GPS (lon)</TableCell>
                     </TableRow>
                 </TableHead>
+                    <TableBody>
+                        {(data.bikes || []).map((row) => {
+                            if (data.bikes[0] !== null) {
+                                return (
+                                <TableRow key={row.bikeid}>
+                                    <TableCell>{row.bikeid}</TableCell>
+                                    <TableCell>{row.name}</TableCell>
+                                    <TableCell>{row.description}</TableCell>
+                                    <TableCell>{row.status}</TableCell>
+                                    <TableCell>{row.battery_level}</TableCell>
+                                    <TableCell>{row.gps_lat}</TableCell>
+                                    <TableCell>{row.gps_lon}</TableCell>
+                                </TableRow>
+                                )
+                            }
+                        })}
+                    </TableBody>
             </Table>
         </>
     );

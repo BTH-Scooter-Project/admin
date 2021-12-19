@@ -11,7 +11,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { DashboardTemplate } from "../Dashboard";
 import { useParams } from 'react-router';
 
-const fetcher = (id) => axios.get(`http://localhost:1337/v1/city/${id}/station?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`, {
+const fetcher = (id) => axios.get(`http://localhost:1337/v1/city/${id}?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`, {
     headers: {
         'x-access-token': sessionStorage.getItem('token'),
     }
@@ -31,21 +31,19 @@ function StationContent() {
                         <TableCell>StationID</TableCell>
                         <TableCell>Address</TableCell>
                         <TableCell>Type</TableCell>
-                        <TableCell>CityID</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                   {(data || []).map((row) => (
+                   {(data || []).map((row, index) => (
                        <TableRow key={row.stationid}>
                             <TableCell>{row.stationid}</TableCell>
                             <TableCell>{row.address}</TableCell>
                             <TableCell>{row.type}</TableCell>
-                            <TableCell>{row.cityid}</TableCell>
                             <TableCell>
                                 <VisibilityIcon cursor="pointer" onClick={() => {
-                                            history.push(`/dashboard/scooter/city/${row.cityid}/scooter`);
-                                            sessionStorage.setItem("apiStation", row.address);
+                                            history.push(`/dashboard/scooter/city/${id.id}/station/${index}`);
+                                            sessionStorage.setItem("apiStation", JSON.stringify(data));
                                         }}/>
                            </TableCell>
                        </TableRow>

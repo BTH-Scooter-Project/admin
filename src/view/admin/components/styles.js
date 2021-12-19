@@ -10,3 +10,12 @@ export const BoxStat = styled.div`
     padding: 2em;
     border-radius: 0.5em;
 `
+
+export const BoxInfo = styled.div`
+    background-color: green;
+    display: inline-block;
+    clear: both;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 50%;
+`
