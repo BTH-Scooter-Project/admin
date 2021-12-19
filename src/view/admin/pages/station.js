@@ -21,6 +21,7 @@ function StationContent() {
     const history = useHistory();
     const id = useParams();
     const { data } = useSWR(id.id, fetcher);
+    console.log(data);
 
     return (
         <>
@@ -31,6 +32,7 @@ function StationContent() {
                         <TableCell>StationID</TableCell>
                         <TableCell>Address</TableCell>
                         <TableCell>Type</TableCell>
+                        <TableCell>Scooters</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -40,6 +42,7 @@ function StationContent() {
                             <TableCell>{row.stationid}</TableCell>
                             <TableCell>{row.address}</TableCell>
                             <TableCell>{row.type}</TableCell>
+                            <TableCell>{row.bikes[0] == null ? 0 : row.bikes.length}</TableCell>
                             <TableCell>
                                 <VisibilityIcon cursor="pointer" onClick={() => {
                                             history.push(`/dashboard/scooter/city/${id.id}/station/${index}`);
