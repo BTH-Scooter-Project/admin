@@ -12,7 +12,7 @@ export const BoxStat = styled.div`
 `
 
 export const BoxInfo = styled.div`
-    background-color: green;
+    background-color: lightgrey;
     display: inline-block;
     clear: both;
     overflow: hidden;

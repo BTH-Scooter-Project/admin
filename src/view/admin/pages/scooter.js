@@ -1,6 +1,4 @@
 import React from 'react';
-import axios from 'axios';
-import useSWR from 'swr';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -44,6 +42,7 @@ function ScooterContent() {
                                 </TableRow>
                                 )
                             }
+                            return null;
                         })}
                     </TableBody>
             </Table>
