@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+const apiAdr = "http://localhost:1337";
+const apiKey = "90301a26-894c-49eb-826d-ae0c2b22a405";
+
 const theme = createTheme();
 
 export default function SignIn() {
@@ -23,7 +26,7 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    Axios.post("http://localhost:1337/v1/auth/staff/login?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405", {
+    Axios.post(`${apiAdr}/v1/auth/staff/login?apiKey=${apiKey}`, {
         email: data.get('email'),
         password: data.get('password')
     }).then((response) => {
