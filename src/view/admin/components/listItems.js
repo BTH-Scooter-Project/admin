@@ -36,12 +36,12 @@ export const mainListItems = (
       <ListItemText primary="Scooters" />
     </ListItem>
   </Link>
-  <Link to="/dashboard/location">
+  <Link to="/dashboard/map">
     <ListItem button>
       <ListItemIcon>
         <LocationOnIcon />
       </ListItemIcon>
-      <ListItemText primary="Locations" />
+      <ListItemText primary="Map" />
     </ListItem>
   </Link>
   <Link to="/dashboard/parking">
