@@ -2,11 +2,7 @@ import React from 'react';
 import  { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import useSWR from 'swr';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { DataGrid } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DashboardTemplate } from "../Dashboard";
@@ -34,46 +30,66 @@ const remove = (id) => {
     }
 }
 
+const columns = [
+    { field: 'userid', headerName: 'UserID', width: 90 },
+    {
+      field: 'firstname',
+      headerName: 'Firstname',
+      width: 150,
+    },
+    {
+      field: 'lastname',
+      headerName: 'Lastname',
+      width: 150,
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      width: 110,
+    },
+    {
+        field: 'cityid',
+        headerName: 'City',
+        width: 150,
+    },
+    {
+        field: 'payment',
+        headerName: 'Payment',
+        width: 150,
+    },
+    {
+        field: 'balance',
+        headerName: 'Balance',
+        width: 150,
+    },
+    {
+        field: 'actions',
+        headerName: 'Actions',
+        width: 150,
+    },
+  ];
+
 function UserContent() {
     const { data } = useSWR('user', fetcher);
     const history = useHistory();
+    const pageSize = 20;
 
     return (
         <>
             <h1 align="center">Users</h1>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Firstname</TableCell>
-                        <TableCell>Lastname</TableCell>
-                        <TableCell>Email</TableCell>
-                        <TableCell>City</TableCell>
-                        <TableCell>Payment</TableCell>
-                        <TableCell>Balance</TableCell>
-                        <TableCell>Actions</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                   {(data || []).map((row, index) => (
-                       <TableRow key={row.userid}>
-                           <TableCell>{row.firstname}</TableCell>
-                           <TableCell>{row.lastname}</TableCell>
-                           <TableCell>{row.email}</TableCell>
-                           <TableCell>{row.cityid}</TableCell>
-                           <TableCell>{row.payment}</TableCell>
-                           <TableCell>{row.balance}</TableCell>
-                           <TableCell>
-                                <VisibilityIcon cursor="pointer" onClick={() => {
-                                    history.push(`/dashboard/user/${index}`);
-                                }}/>
-                                <DeleteIcon cursor="pointer" onClick={() => {
-                                    remove(row.userid);
-                                }}/>
-                           </TableCell>
-                       </TableRow>
-                   ))}
-                </TableBody>
-            </Table>
+            <div style={{ height: 765, width: '100%' }}>
+                <DataGrid
+                pageSize={pageSize}
+                rowsPerPageOptions={[pageSize]}
+                pagination
+                disableSelectionOnClick
+                disableColumnSelector
+                disableDensitySelector
+                columns={columns}
+                rows={data || []}
+                getRowId={(row) => row.userid}
+                />
+            </div>
         </>
     );
 }

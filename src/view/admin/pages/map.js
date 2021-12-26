@@ -1,18 +1,9 @@
 import * as React from 'react';
 import axios from 'axios';
-//import  { useHistory } from 'react-router-dom';
 import useSWR from 'swr';
 import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import L from 'leaflet';
-/*
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-*/
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { MapContainer, TileLayer, Marker, Popup, LayerGroup, Circle, LayersControl } from 'react-leaflet';
 import { DashboardTemplate } from "../Dashboard";
@@ -27,16 +18,17 @@ const fetcher = async (id) => {
         }
     });
     const data = response.data.data;
-    sessionStorage.setItem("apiMap", JSON.stringify(data));
     return data
 }
 
 function MapContent() {
     const id = 2;
     const {data} = useSWR(id, fetcher);
-    //const history = useHistory();
-    const position = [51.505, -0.09]
-    console.log(data);
+    const position = [
+      [62.390839, 17.306919], 
+      [59.329323, 18.068581], 
+      [56.161823, 15.586825]
+    ];
 
     delete L.Icon.Default.prototype._getIconUrl;
 
@@ -48,14 +40,15 @@ function MapContent() {
 
     return (
         <>
-          <MapContainer style={{ height: "450px", width: "100%" }} center={position} zoom={13} scrollWheelZoom={true}>
+          <h1 align="center">Map</h1>
+          <MapContainer style={{ height: "750px", width: "100%" }} center={position[id - 1]} zoom={13} scrollWheelZoom={true}>
             <LayersControl position="topright">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <LayersControl.Overlay name="My Position">
-                <Marker position={position}>
+                <Marker position={position[id - 1]}>
                   <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
                   </Popup>
@@ -73,7 +66,7 @@ function MapContent() {
               <LayersControl.Overlay checked name="Scooters">
                 <LayerGroup>
                   <MarkerClusterGroup>
-                    {(data || []).map((row, index) => (
+                    {(data || []).map((row) => (
                       <Marker key={row.name} position={[row.gps_lat, row.gps_lon]}>
                         <Popup>
                           <div>{row.name}</div>
