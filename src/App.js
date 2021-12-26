@@ -8,6 +8,7 @@ import UserDetail from './view/admin/pages/userDetail';
 import City from './view/admin/pages/city';
 import Station from './view/admin/pages/station';
 import Map from './view/admin/pages/map';
+import PageSizeCustomOptions from './view/admin/pages/datagrid';
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
        <Route path="/dashboard/scooter/city/:id" exact component={Station} />
        <Route path="/dashboard/scooter/city/:id/station/:id" exact component={Scooter} />
        <Route path="/dashboard/map" exact component={Map} />
+       <Route path="/dashboard/datagrid" exact component={PageSizeCustomOptions} />
+
      </Switch>
    </Router>
   );
