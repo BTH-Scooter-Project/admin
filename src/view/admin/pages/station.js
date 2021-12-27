@@ -2,11 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 import useSWR from 'swr';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import { DataGrid } from '@mui/x-data-grid';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { DashboardTemplate } from "../Dashboard";
 import { useParams } from 'react-router';
@@ -19,40 +15,64 @@ const fetcher = (id) => axios.get(`http://localhost:1337/v1/city/${id}?apiKey=90
     
 function StationContent() {
     const history = useHistory();
+    const columns = [
+        { field: 'stationid', headerName: 'StationID', width: 90 },
+        {
+          field: 'address',
+          headerName: 'Address',
+          width: 350,
+        },
+        {
+          field: 'type',
+          headerName: 'Type',
+          width: 350,
+        },
+        {
+            field: 'Scooters',
+            width: 350,
+            renderCell: (cellValues) => {
+                return (
+                  <>
+                      <p>{cellValues.row.bikes[0] == null ? 0 : cellValues.row.bikes.length}</p>
+                  </>
+                );
+              }
+        },
+        {
+            field: "Action",
+            width: 350,
+            renderCell: (cellValues) => {
+              return (
+                <>
+                    <VisibilityIcon cursor="pointer" onClick={() => {
+                        history.push(`/dashboard/scooter/city/${id.id}/station/${data.indexOf(cellValues.row)}`);
+                        sessionStorage.setItem("apiStation", JSON.stringify(data));
+                    }}/>
+                </>
+              );
+            }
+          },
+      ];
     const id = useParams();
     const { data } = useSWR(id.id, fetcher);
-    console.log(data);
+    const pageSize = 15;
 
     return (
         <>
             <h1 align="center">Stations</h1>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>StationID</TableCell>
-                        <TableCell>Address</TableCell>
-                        <TableCell>Type</TableCell>
-                        <TableCell>Scooters</TableCell>
-                        <TableCell>Action</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                   {(data || []).map((row, index) => (
-                       <TableRow key={row.stationid}>
-                            <TableCell>{row.stationid}</TableCell>
-                            <TableCell>{row.address}</TableCell>
-                            <TableCell>{row.type}</TableCell>
-                            <TableCell>{row.bikes[0] == null ? 0 : row.bikes.length}</TableCell>
-                            <TableCell>
-                                <VisibilityIcon cursor="pointer" onClick={() => {
-                                            history.push(`/dashboard/scooter/city/${id.id}/station/${index}`);
-                                            sessionStorage.setItem("apiStation", JSON.stringify(data));
-                                        }}/>
-                           </TableCell>
-                       </TableRow>
-                   ))}
-                </TableBody>
-            </Table>
+            <div style={{ display: 'flex', minHeight: 900 }}>
+                <div style={{ flexGrow: 1 }}>
+                    <DataGrid
+                        disableSelectionOnClick
+                        pageSize={pageSize}
+                        rowsPerPageOptions={[pageSize]}
+                        pagination
+                        columns={columns}
+                        rows={data || []}
+                        getRowId={(row) => row.stationid}
+                    />
+                </div>
+            </div>
         </>
     );
 }

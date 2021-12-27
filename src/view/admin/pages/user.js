@@ -37,32 +37,32 @@ function UserContent() {
         {
           field: 'firstname',
           headerName: 'Firstname',
-          width: 200,
+          width: 220,
         },
         {
           field: 'lastname',
           headerName: 'Lastname',
-          width: 200,
+          width: 220,
         },
         {
           field: 'email',
           headerName: 'Email',
-          width: 200,
+          width: 220,
         },
         {
             field: 'cityid',
             headerName: 'City',
-            width: 200,
+            width: 220,
         },
         {
             field: 'payment',
             headerName: 'Payment',
-            width: 200,
+            width: 220,
         },
         {
             field: 'balance',
             headerName: 'Balance',
-            width: 200,
+            width: 220,
         },
         {
             field: "Actions",
@@ -86,8 +86,7 @@ function UserContent() {
     return (
         <>
             <h1 align="center">Users</h1>
-                
-                <div style={{ display: 'flex', minHeight: 900 }}>
+            <div style={{ display: 'flex', minHeight: 900 }}>
                 <div style={{ flexGrow: 1 }}>
                     <DataGrid
                         disableSelectionOnClick
@@ -99,7 +98,7 @@ function UserContent() {
                         getRowId={(row) => row.userid}
                     />
                 </div>
-                </div>
+            </div>
         </>
     );
 }
