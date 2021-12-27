@@ -37,32 +37,32 @@ function UserContent() {
         {
           field: 'firstname',
           headerName: 'Firstname',
-          width: 150,
+          width: 200,
         },
         {
           field: 'lastname',
           headerName: 'Lastname',
-          width: 150,
+          width: 200,
         },
         {
           field: 'email',
           headerName: 'Email',
-          width: 110,
+          width: 200,
         },
         {
             field: 'cityid',
             headerName: 'City',
-            width: 150,
+            width: 200,
         },
         {
             field: 'payment',
             headerName: 'Payment',
-            width: 150,
+            width: 200,
         },
         {
             field: 'balance',
             headerName: 'Balance',
-            width: 150,
+            width: 200,
         },
         {
             field: "Actions",
@@ -86,7 +86,7 @@ function UserContent() {
     return (
         <>
             <h1 align="center">Users</h1>
-            <div style={{ height: 900, width: 1075, margin: 'auto'}}>
+            <div style={{ height: 900, width: window.innerWidth - 400, margin: '0 auto'}}>
                 <DataGrid 
                     pageSize={pageSize}
                     rowsPerPageOptions={[pageSize]}
