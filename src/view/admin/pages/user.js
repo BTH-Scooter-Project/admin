@@ -86,16 +86,20 @@ function UserContent() {
     return (
         <>
             <h1 align="center">Users</h1>
-            <div style={{ height: 900, width: window.innerWidth - 400, margin: '0 auto'}}>
-                <DataGrid 
-                    pageSize={pageSize}
-                    rowsPerPageOptions={[pageSize]}
-                    pagination
-                    columns={columns}
-                    rows={data || []}
-                    getRowId={(row) => row.userid}
-                />
-            </div>
+                
+                <div style={{ display: 'flex', minHeight: 900 }}>
+                <div style={{ flexGrow: 1 }}>
+                    <DataGrid
+                        disableSelectionOnClick
+                        pageSize={pageSize}
+                        rowsPerPageOptions={[pageSize]}
+                        pagination
+                        columns={columns}
+                        rows={data || []}
+                        getRowId={(row) => row.userid}
+                    />
+                </div>
+                </div>
         </>
     );
 }
