@@ -30,64 +30,70 @@ const remove = (id) => {
     }
 }
 
-const columns = [
-    { field: 'userid', headerName: 'UserID', width: 90 },
-    {
-      field: 'firstname',
-      headerName: 'Firstname',
-      width: 150,
-    },
-    {
-      field: 'lastname',
-      headerName: 'Lastname',
-      width: 150,
-    },
-    {
-      field: 'email',
-      headerName: 'Email',
-      width: 110,
-    },
-    {
-        field: 'cityid',
-        headerName: 'City',
-        width: 150,
-    },
-    {
-        field: 'payment',
-        headerName: 'Payment',
-        width: 150,
-    },
-    {
-        field: 'balance',
-        headerName: 'Balance',
-        width: 150,
-    },
-    {
-        field: 'actions',
-        headerName: 'Actions',
-        width: 150,
-    },
-  ];
-
 function UserContent() {
-    const { data } = useSWR('user', fetcher);
     const history = useHistory();
-    const pageSize = 20;
+    const columns = [
+        { field: 'userid', headerName: 'UserID', width: 90 },
+        {
+          field: 'firstname',
+          headerName: 'Firstname',
+          width: 150,
+        },
+        {
+          field: 'lastname',
+          headerName: 'Lastname',
+          width: 150,
+        },
+        {
+          field: 'email',
+          headerName: 'Email',
+          width: 110,
+        },
+        {
+            field: 'cityid',
+            headerName: 'City',
+            width: 150,
+        },
+        {
+            field: 'payment',
+            headerName: 'Payment',
+            width: 150,
+        },
+        {
+            field: 'balance',
+            headerName: 'Balance',
+            width: 150,
+        },
+        {
+            field: "Actions",
+            renderCell: (cellValues) => {
+              return (
+                <>
+                    <VisibilityIcon cursor="pointer" onClick={() => {
+                        history.push(`/dashboard/user/${data.indexOf(cellValues.row)}`)
+                    }}/>
+                    <DeleteIcon cursor="pointer" onClick={() => {
+                        remove(cellValues.row.userid);
+                    }}/>
+                </>
+              );
+            }
+          },
+      ];
+    const { data } = useSWR('user', fetcher);
+    const pageSize = 15;
 
     return (
         <>
             <h1 align="center">Users</h1>
-            <div style={{ height: 765, width: '100%' }}>
-                <DataGrid
-                pageSize={pageSize}
-                rowsPerPageOptions={[pageSize]}
-                pagination
-                disableSelectionOnClick
-                disableColumnSelector
-                disableDensitySelector
-                columns={columns}
-                rows={data || []}
-                getRowId={(row) => row.userid}
+            <div style={{ height: 900, width: 1075, margin: 'auto'}}>
+                <DataGrid 
+                    pageSize={pageSize}
+                    rowsPerPageOptions={[pageSize]}
+                    pagination
+                    columns={columns}
+                    rows={data || []}
+                    getRowId={(row) => row.userid}
                 />
             </div>
         </>

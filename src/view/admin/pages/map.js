@@ -41,7 +41,7 @@ function MapContent() {
     return (
         <>
           <h1 align="center">Map</h1>
-          <MapContainer style={{ height: "750px", width: "100%" }} center={position[id - 1]} zoom={13} scrollWheelZoom={true}>
+          <MapContainer style={{ height: '750px', width: "100%" }} center={position[id - 1]} zoom={13} scrollWheelZoom={true}>
             <LayersControl position="topright">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
