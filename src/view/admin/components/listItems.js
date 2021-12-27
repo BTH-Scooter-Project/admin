@@ -6,7 +6,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import ElectricScooterIcon from '@mui/icons-material/ElectricScooter';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import ConstructionIcon from '@mui/icons-material/Construction';
 
 import { Link } from "react-router-dom";
 
@@ -44,12 +44,12 @@ export const mainListItems = (
       <ListItemText primary="Map" />
     </ListItem>
   </Link>
-  <Link to="/dashboard/parking">
+  <Link to="/dashboard/maintenence">
     <ListItem button>
       <ListItemIcon>
-        <LocalParkingIcon />
+        <ConstructionIcon />
       </ListItemIcon>
-      <ListItemText primary="Parking" />
+      <ListItemText primary="Maintenence" />
     </ListItem>
   </Link>
   </div>

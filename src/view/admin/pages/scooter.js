@@ -6,7 +6,6 @@ import { useParams } from 'react-router';
 function ScooterContent() {
     const id = useParams();
     const data = JSON.parse(sessionStorage.getItem('apiStation'))[id.id].bikes;
-    console.log(data);
     const pageSize = 15;
     const columns = [
         { field: 'bikeid', headerName: 'BikeID', width: 90 },
