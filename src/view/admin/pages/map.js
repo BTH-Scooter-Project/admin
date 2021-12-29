@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 import 'leaflet/dist/leaflet.css';
@@ -7,6 +7,7 @@ import L from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { MapContainer, TileLayer, Marker, Popup, LayerGroup, Circle, LayersControl } from 'react-leaflet';
 import { DashboardTemplate } from "../Dashboard";
+import { NativeSelect } from '@mui/material';
 
 const apiAdr = "http://localhost:1337";
 const apiKey = "90301a26-894c-49eb-826d-ae0c2b22a405";
@@ -14,21 +15,15 @@ const apiKey = "90301a26-894c-49eb-826d-ae0c2b22a405";
 
 const fetcher = async (id) => {
     return axios.all([
-        axios.get(`${apiAdr}/v1/city/${id}/bike?apiKey=${apiKey}`, {
-            headers: {
-                'x-access-token': sessionStorage.getItem('token'),
-            }
-        }),
-        axios.get(`${apiAdr}/v1/city/${id}/station?apiKey=${apiKey}`, {
-            headers: {
-                'x-access-token': sessionStorage.getItem('token'),
-            }
-        })
+        axios.get(`${apiAdr}/v1/city/${id}/bike?apiKey=${apiKey}`),
+        axios.get(`${apiAdr}/v1/city/${id}/station?apiKey=${apiKey}`),
+        axios.get(`${apiAdr}/v1/city?apiKey=${apiKey}`)
     ])
-    .then(axios.spread((bikes, stations) => {
+    .then(axios.spread((bikes, stations, cities) => {
         var stationz = [];
         var bikez = [];
         var repairz = [];
+        const citiez = cities.data.data;
 
         stations.data.data.map((station) => {
             if(station.gps_lat === undefined || station.gps_lon === undefined ) {
@@ -46,16 +41,16 @@ const fetcher = async (id) => {
             }
             return "working.."
         })
-        return [bikez, stationz, repairz]
+        return [bikez, stationz, repairz, citiez]
     }));
 
 }
 
 
 function MapContent() {
-    const id = 2;
-    const {data} = useSWR(id, fetcher);
-    console.log({data});
+    const [id, setId] = useState(1);
+    const { data } = useSWR(id, fetcher);
+
     const position = [
       [62.390839, 17.306919],
       [59.329323, 18.068581],
@@ -73,6 +68,17 @@ function MapContent() {
     return (
         <>
           <h1 align="center">Map</h1>
+          <NativeSelect onChange={(e) => setId(e.target.value)}>
+          {(data || []).map((f, i) => {
+                        if(i === 3) {
+                          return f.map((row, index) => (
+                            index !== 0 ? <option key={row.cityid} value={row.cityid}>{row.name}</option> : null
+                          ))
+                        }
+                        return null
+                    })}
+            
+          </NativeSelect>
           <MapContainer style={{ height: '750px', width: "100%" }} center={position[id - 1]} zoom={13} scrollWheelZoom={true}>
             <LayersControl position="topright">
               <TileLayer
@@ -100,7 +106,7 @@ function MapContent() {
                           </Circle>
                         ))
                       }
-                      return "working?";
+                      return null
                   })}
                   </MarkerClusterGroup>
                 </LayerGroup>
@@ -121,7 +127,7 @@ function MapContent() {
                             </Marker>
                           ))
                         }
-                        return "working?";
+                        return null
                     })}
                   </MarkerClusterGroup>
                 </LayerGroup>

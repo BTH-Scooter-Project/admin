@@ -22,6 +22,7 @@ function MaintenenceContent() {
         cities();
         bikeFetcher();
         console.log("fetch")
+       
     },[cityid])
 
     const pageSize = 15;
@@ -63,8 +64,9 @@ function MaintenenceContent() {
                 return (
                   <>
                       <CompareArrowsIcon cursor="pointer" style={{color: 'blue'}} onClick={() => {
-                        history.push('');
+                        history.push(`/dashboard/maintenence/move/${cellValues.row.bikeid}`);
                       }}/>
+                      <WarningIcon cursor="pointer" style={{color: 'red'}} onClick={() => {}}/>
                   </>
                 );
               }

@@ -8,17 +8,12 @@ function MoveContent() {
     const { id } = useParams();
     const [bike, setBike] = useState([]);
 
-
-
-    const bikeFetcher = () => axios.get(`http://localhost:1337/v1/bike/${id}?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`
+    const bikeFetcher = async () => axios.get(`http://localhost:1337/v1/bike/${id}?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`
         ).then((response) => setBike(response.data.data));
-        
-
-
 
     useEffect(() => {
         bikeFetcher();
-        
+    
     },[]);
 
     return(
