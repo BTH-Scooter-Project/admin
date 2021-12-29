@@ -9,6 +9,7 @@ import City from './view/admin/pages/city';
 import Station from './view/admin/pages/station';
 import Map from './view/admin/pages/map';
 import Maintenence from './view/admin/pages/maintenence';
+import Move from './view/admin/pages/move';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/dashboard/scooter/city/:id/station/:id" exact component={Scooter} />
         <Route path="/dashboard/map" exact component={Map} />
         <Route path="/dashboard/maintenence" exact component={Maintenence} />
+        <Route path="/dashboard/maintenence/move/:id" exact component={Move} />
      </Switch>
    </Router>
   );
