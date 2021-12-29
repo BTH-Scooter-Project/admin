@@ -11,22 +11,54 @@ import { DashboardTemplate } from "../Dashboard";
 const apiAdr = "http://localhost:1337";
 const apiKey = "90301a26-894c-49eb-826d-ae0c2b22a405";
 
+
 const fetcher = async (id) => {
-    const response = await axios.get(`${apiAdr}/v1/city/${id}/bike?apiKey=${apiKey}`, {
-        headers: {
-            'x-access-token': sessionStorage.getItem('token'),
-        }
-    });
-    const data = response.data.data;
-    return data
+    return axios.all([
+        axios.get(`${apiAdr}/v1/city/${id}/bike?apiKey=${apiKey}`, {
+            headers: {
+                'x-access-token': sessionStorage.getItem('token'),
+            }
+        }),
+        axios.get(`${apiAdr}/v1/city/${id}/station?apiKey=${apiKey}`, {
+            headers: {
+                'x-access-token': sessionStorage.getItem('token'),
+            }
+        })
+    ])
+    .then(axios.spread((bikes, stations) => {
+        var stationz = [];
+        var bikez = [];
+        var repairz = [];
+
+        stations.data.data.map((station) => {
+            if(station.gps_lat === undefined || station.gps_lon === undefined ) {
+                console.log(station);
+            } else {
+                stationz.push(station);
+            }
+            return "working.."
+        })
+        bikes.data.data.map((bike) => {
+            if(bike.gps_lat === null || bike.gps_lon === null) {
+                repairz.push(bike);
+            } else {
+                bikez.push(bike);
+            }
+            return "working.."
+        })
+        return [bikez, stationz, repairz]
+    }));
+
 }
+
 
 function MapContent() {
     const id = 2;
     const {data} = useSWR(id, fetcher);
+    console.log({data});
     const position = [
-      [62.390839, 17.306919], 
-      [59.329323, 18.068581], 
+      [62.390839, 17.306919],
+      [59.329323, 18.068581],
       [56.161823, 15.586825]
     ];
 
@@ -56,26 +88,41 @@ function MapContent() {
               </LayersControl.Overlay>
               <LayersControl.Overlay name="Stations">
                 <LayerGroup>
-                  <Circle
-                    center={[51.51, -0.08]}
-                    pathOptions={{ color: 'green', fillColor: 'green' }}
-                    radius={100}
-                  />
+                  <MarkerClusterGroup>
+                  {(data || []).map((f, i) => {
+                      if(i === 1) {
+                        return f.map((station) => (
+                          <Circle key={station.stationid} center={[station.gps_lat, station.gps_lon]} radius={200}>
+                            <Popup>
+                              <div>{station.address}</div>
+                              <div>{station.type}</div>
+                            </Popup>
+                          </Circle>
+                        ))
+                      }
+                      return "working?";
+                  })}
+                  </MarkerClusterGroup>
                 </LayerGroup>
               </LayersControl.Overlay>
               <LayersControl.Overlay checked name="Scooters">
                 <LayerGroup>
                   <MarkerClusterGroup>
-                    {(data || []).map((row) => (
-                      <Marker key={row.name} position={[row.gps_lat, row.gps_lon]}>
-                        <Popup>
-                          <div>{row.name}</div>
-                          <div>{row.status}</div>
-                          <div>{row.image}</div>
-                          <div>{row.description}</div>
-                        </Popup>
-                      </Marker>
-                    ))}
+                    {(data || []).map((f, i) => {
+                        if(i === 0) {
+                          return f.map((row) => (
+                            <Marker key={row.name} position={[row.gps_lat, row.gps_lon]}>
+                              <Popup>
+                                <div>{row.name}</div>
+                                <div>{row.status}</div>
+                                <div>{row.image}</div>
+                                <div>{row.description}</div>
+                              </Popup>
+                            </Marker>
+                          ))
+                        }
+                        return "working?";
+                    })}
                   </MarkerClusterGroup>
                 </LayerGroup>
               </LayersControl.Overlay>
