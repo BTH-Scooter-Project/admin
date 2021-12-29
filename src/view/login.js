@@ -20,8 +20,6 @@ const theme = createTheme();
 
 export default function SignIn() {
     const history = useHistory();
-
-
     const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
