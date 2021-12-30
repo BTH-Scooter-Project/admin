@@ -79,14 +79,14 @@ function MapContent() {
                     })}
             
           </NativeSelect>
-          <MapContainer style={{ height: '750px', width: "100%" }} center={position[id - 1]} zoom={13} scrollWheelZoom={true}>
+          <MapContainer style={{ height: '750px', width: "100%" }} center={position[1]} zoom={6} scrollWheelZoom={true}>
             <LayersControl position="topright">
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               <LayersControl.Overlay name="My Position">
-                <Marker position={position[id - 1]}>
+                <Marker position={position[1]}>
                   <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
                   </Popup>

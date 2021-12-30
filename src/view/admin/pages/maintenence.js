@@ -11,11 +11,12 @@ function MaintenenceContent() {
     const [cityid, setCityId] = useState(-1);
     const [bikes, setBikes] = useState([]); 
     const [city, setCity] = useState([]);
+    const [status, setStatus] = useState("service");
     const history = useHistory();
 
     const bikeFetcher = async () => axios.get(`http://localhost:1337/v1/city/${cityid}/bike?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`
     ).then((response) => setBikes(response.data.data));
-    const cities = async () => axios.get(`http://localhost:1337/v1/city/?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`
+    const cities = async () => axios.get(`http://localhost:1337/v1/city?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`
     ).then((response) => setCity(response.data.data));
 
     useEffect(()=> {
@@ -24,6 +25,29 @@ function MaintenenceContent() {
         console.log("fetch")
        
     },[cityid])
+
+    console.log(bikes[0]);
+
+    const turnOff = (bike) => {
+      let result = window.confirm(`Want to delete turn of bike ${bike.bikeid}?`);
+      if (result) {
+          if (bike.status === "service") {
+              setStatus("vacant");
+          }
+
+          axios.put(`http://localhost:1337/v1/bike/${bike.bikeid}?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`, {
+              gps_lat: bike.gps_lat,
+              gps_lon: bike.gps_lon,
+              stationid: bike.stationid,
+              status: status
+              }, {
+              headers: {
+                  'x-access-token': sessionStorage.getItem('token'),
+              }
+          });
+          history.push("/dashboard/maintenence");
+    }
+  }
 
     const pageSize = 15;
     const columns = [
@@ -64,9 +88,9 @@ function MaintenenceContent() {
                 return (
                   <>
                       <CompareArrowsIcon cursor="pointer" style={{color: 'blue'}} onClick={() => {
-                        history.push(`/dashboard/maintenence/move/${cellValues.row.bikeid}`);
+                        history.push(`/dashboard/maintenence/move/${cityid}/${cellValues.row.bikeid}`);
                       }}/>
-                      <WarningIcon cursor="pointer" style={{color: 'red'}} onClick={() => {}}/>
+                      <WarningIcon cursor="pointer" style={{color: 'red'}} onClick={() => {turnOff(cellValues.row);}}/>
                   </>
                 );
               }
