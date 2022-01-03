@@ -22,6 +22,7 @@ function MoveContent() {
     useEffect(() => {
         bikeFetcher(bikeid);
         stationFetcher(cityid);
+        // eslint-disable-next-line
     },[stationId]);
 
 

@@ -5,13 +5,13 @@ import axios from "axios";
 import NativeSelect from '@mui/material/NativeSelect';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import WarningIcon from '@mui/icons-material/Warning';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useHistory } from "react-router-dom";
 
 function MaintenenceContent() { 
     const [cityid, setCityId] = useState(-1);
     const [bikes, setBikes] = useState([]); 
     const [city, setCity] = useState([]);
-    const [status, setStatus] = useState("service");
     const history = useHistory();
 
     const bikeFetcher = async () => axios.get(`http://localhost:1337/v1/city/${cityid}/bike?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`
@@ -22,17 +22,15 @@ function MaintenenceContent() {
     useEffect(()=> {
         cities();
         bikeFetcher();
-        console.log("fetch")
-       
+        // eslint-disable-next-line
     },[cityid])
 
-    console.log(bikes[0]);
-
     const turnOff = (bike) => {
-      let result = window.confirm(`Want to delete turn of bike ${bike.bikeid}?`);
+      let status = "vacant";
+      let result = window.confirm(`Want to mark bike ${bike.bikeid} for repair?`);
       if (result) {
-          if (bike.status === "service") {
-              setStatus("vacant");
+          if (bike.status === "vacant") {
+              status = "service"
           }
 
           axios.put(`http://localhost:1337/v1/bike/${bike.bikeid}?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405`, {
@@ -45,7 +43,7 @@ function MaintenenceContent() {
                   'x-access-token': sessionStorage.getItem('token'),
               }
           });
-          history.push("/dashboard/maintenence");
+          window.location.reload();
     }
   }
 
@@ -90,7 +88,10 @@ function MaintenenceContent() {
                       <CompareArrowsIcon cursor="pointer" style={{color: 'blue'}} onClick={() => {
                         history.push(`/dashboard/maintenence/move/${cityid}/${cellValues.row.bikeid}`);
                       }}/>
-                      <WarningIcon cursor="pointer" style={{color: 'red'}} onClick={() => {turnOff(cellValues.row);}}/>
+                      {cellValues.row.status === "vacant" ? 
+                          <CheckCircleIcon cursor="pointer" style={{color: 'green'}} onClick={() => {turnOff(cellValues.row);}}/> : 
+                          <WarningIcon cursor="pointer" style={{color: 'red'}} onClick={() => {turnOff(cellValues.row);}}/>
+                      }   
                   </>
                 );
               }
