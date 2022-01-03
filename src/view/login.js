@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
 import  { Redirect, useHistory } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
@@ -19,6 +19,7 @@ const apiKey = "90301a26-894c-49eb-826d-ae0c2b22a405";
 const theme = createTheme();
 
 export default function SignIn() {
+    const [errorMsg, setErrorMsg] = useState(null);
     const history = useHistory();
     const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,13 +29,11 @@ export default function SignIn() {
         email: data.get('email'),
         password: data.get('password')
     }).then((response) => {
-        if (!response.data.data.token) {
-            console.log("error!");
-        } else {
-            sessionStorage.setItem("token", response.data.data.token);
-            sessionStorage.setItem("user", response.data.data.user);
-            history.push("/dashboard");
-        }
+        sessionStorage.setItem("token", response.data.data.token);
+        sessionStorage.setItem("user", response.data.data.user);
+        history.push("/dashboard");
+    }).catch(() => {
+        setErrorMsg("Wrong Email/Password combination!")
     })
   };
   if (sessionStorage.getItem("token")) {
@@ -57,6 +56,9 @@ export default function SignIn() {
               </Avatar>
               <Typography component="h1" variant="h5">
                 Sign in
+              </Typography>
+              <Typography component="h1" variant="h5" style={{color: 'darkred'}}>
+                {errorMsg}
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField
