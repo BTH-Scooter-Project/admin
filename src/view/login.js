@@ -20,14 +20,15 @@ const theme = createTheme();
 
 export default function SignIn() {
     const [errorMsg, setErrorMsg] = useState(null);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const history = useHistory();
     const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     Axios.post(`${apiAdr}/v1/auth/staff/login?apiKey=${apiKey}`, {
-        email: data.get('email'),
-        password: data.get('password')
+        email: email,
+        password: password
     }).then((response) => {
         sessionStorage.setItem("token", response.data.data.token);
         sessionStorage.setItem("user", response.data.data.user);
@@ -70,6 +71,9 @@ export default function SignIn() {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
+                  inputProps={{ "data-testid": "email" }}
                 />
                 <TextField
                   margin="normal"
@@ -80,6 +84,9 @@ export default function SignIn() {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  data-testid="password"
                 />
                 <Button
                   type="submit"

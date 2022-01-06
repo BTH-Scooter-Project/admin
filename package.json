@@ -12,6 +12,7 @@
     "@mui/x-data-grid": "^5.2.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "axios": "^0.21.4",
     "leaflet": "^1.7.1",
     "next": "^11.1.2",
