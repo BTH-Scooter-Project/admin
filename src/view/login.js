@@ -23,6 +23,7 @@ export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
+
     const handleSubmit = (event) => {
     event.preventDefault();
     // eslint-disable-next-line no-console
@@ -58,7 +59,7 @@ export default function SignIn() {
               <Typography component="h1" variant="h5">
                 Sign in
               </Typography>
-              <Typography component="h1" variant="h5" style={{color: 'darkred'}}>
+              <Typography component="h1" variant="h5" style={{color: 'darkred'}} data-testid="error">
                 {errorMsg}
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -73,7 +74,6 @@ export default function SignIn() {
                   autoFocus
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
-                  inputProps={{ "data-testid": "email" }}
                 />
                 <TextField
                   margin="normal"
@@ -86,13 +86,13 @@ export default function SignIn() {
                   autoComplete="current-password"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
-                  data-testid="password"
                 />
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  data-testid="submit"
                 >
                   Sign In
                 </Button>

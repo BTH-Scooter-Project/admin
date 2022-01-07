@@ -1,26 +1,27 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import userEvent from '@testing-library/user-event';
+import { render, fireEvent, cleanup, screen } from "@testing-library/react";
+import { act, Simulate } from "react-dom/test-utils"
 import SignIn from "./login";
 
 const email = "test@test.se";
 const password = "test123";
 
-test('Check if login form renders correctly.', () => {
-    render(<SignIn />);
+afterEach(cleanup);
 
-    const emailInput = screen.getByTestId("email");
-    const passwordInput = screen.getByTestId("password");
+describe("Sign in", () => {
 
-    expect(emailInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-});
+    it('Test a correct email/password combo', async () => {
+        const {getByTestId, getByLabelText} = render(<SignIn />);
+        await act(async () => {
+            fireEvent.change(getByLabelText("Email Address *"), {target: {value: email}});
+            fireEvent.change(getByLabelText("Password *"), {target: {value: password}});
+        })
 
-test('Login with a correct email/password combo.', async () => {
-    render(<SignIn />);
-
-    const emailInput = screen.getByTestId("email");
-    userEvent.type(emailInput, (email.split('').reverse()).join('')); //Reverse email input since the first letter on change gets reversed
-
-    expect(screen.getByTestId('email')).toHaveValue(email);
+        await act(async () => {
+            expect(getByLabelText("Email Address *")).toHaveValue(email);
+            expect(getByLabelText("Password *")).toHaveValue(password);
+            Simulate.submit(getByTestId('submit'));
+            expect(screen.getByTestId('error')).toHaveTextContent("");
+        })
+    })
 })
