@@ -62,7 +62,7 @@ export default function SignIn() {
               <Typography component="h1" variant="h5" style={{color: 'darkred'}} data-testid="error">
                 {errorMsg}
               </Typography>
-              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }} data-testid="form">
                 <TextField
                   margin="normal"
                   required

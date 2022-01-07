@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, cleanup, screen } from "@testing-library/react";
+import { render, fireEvent, cleanup, screen, waitFor } from "@testing-library/react";
 import { act, Simulate } from "react-dom/test-utils"
 import SignIn from "./login";
 
@@ -9,19 +9,25 @@ const password = "test123";
 afterEach(cleanup);
 
 describe("Sign in", () => {
-
+    let emailIn, passwordIn;
     it('Test a correct email/password combo', async () => {
-        const {getByTestId, getByLabelText} = render(<SignIn />);
-        await act(async () => {
-            fireEvent.change(getByLabelText("Email Address *"), {target: {value: email}});
-            fireEvent.change(getByLabelText("Password *"), {target: {value: password}});
+        act(() => {
+           render(<SignIn />);
+        });
+
+        act(() => {
+            emailIn = screen.getByLabelText("Email Address *");
+            passwordIn = screen.getByLabelText("Password *");
         })
 
-        await act(async () => {
-            expect(getByLabelText("Email Address *")).toHaveValue(email);
-            expect(getByLabelText("Password *")).toHaveValue(password);
-            Simulate.submit(getByTestId('submit'));
-            expect(screen.getByTestId('error')).toHaveTextContent("");
+        act(() => {
+            fireEvent.change(emailIn, {target: { value: "test"}});
+            fireEvent.change(passwordIn, {target: {value: password}});
+        })
+        await Promise.resolve(fireEvent.click(screen.getByTestId('submit')));
+
+        act(() => {
+            screen.debug();
         })
     })
 })
