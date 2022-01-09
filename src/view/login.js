@@ -13,16 +13,26 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import { createServer } from 'miragejs';
+
+let server = createServer()
+server.get("/api/users", { users: [{ id: 1, name: "Bob" }] })
+
 const apiAdr = "http://localhost:1337";
 const apiKey = "90301a26-894c-49eb-826d-ae0c2b22a405";
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({test = true}) {
     const [errorMsg, setErrorMsg] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const history = useHistory();
+
+    const mochSubmit = async (event) => {
+      event.preventDefault();
+      setErrorMsg("json.users[0].name")
+    }
 
     const handleSubmit = (event) => {
     event.preventDefault();
@@ -62,7 +72,7 @@ export default function SignIn() {
               <Typography component="h1" variant="h5" style={{color: 'darkred'}} data-testid="error">
                 {errorMsg}
               </Typography>
-              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }} data-testid="form">
+              <Box component="form" onSubmit={!test ? handleSubmit : mochSubmit} noValidate sx={{ mt: 1 }} data-testid="form">
                 <TextField
                   margin="normal"
                   required
