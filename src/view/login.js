@@ -12,18 +12,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-import { createServer } from 'miragejs';
-
-let server = createServer()
-server.get("/api/users", { users: [{ id: 1, name: "Bob" }] })
+import { staffLogin } from '../test/mochApi';
 
 const apiAdr = "http://localhost:1337";
 const apiKey = "90301a26-894c-49eb-826d-ae0c2b22a405";
 
 const theme = createTheme();
 
-export default function SignIn({test = true}) {
+export default function SignIn({test = false}) {
     const [errorMsg, setErrorMsg] = useState(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -31,7 +27,15 @@ export default function SignIn({test = true}) {
 
     const mochSubmit = async (event) => {
       event.preventDefault();
-      setErrorMsg("json.users[0].name")
+      let res = staffLogin({
+        email,
+        password
+      });
+      try {
+        if (res.data.token);
+      } catch(e) {
+        setErrorMsg("Wrong Email/Password combination!")
+      }
     }
 
     const handleSubmit = (event) => {

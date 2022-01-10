@@ -9,7 +9,7 @@ const password = "test123";
 afterEach(cleanup);
 
 describe("Sign in", () => {
-    let emailIn, passwordIn;
+    let emailIn, passwordIn, errorMsg;
     it('Test a correct email/password combo', async () => {
         act(() => {
            render(<SignIn test={true}/>);
@@ -18,14 +18,20 @@ describe("Sign in", () => {
         act(() => {
             emailIn = screen.getByLabelText("Email Address *");
             passwordIn = screen.getByLabelText("Password *");
+            errorMsg = screen.getByTestId("error");
         })
 
         act(() => {
             fireEvent.change(emailIn, {target: { value: email}});
             fireEvent.change(passwordIn, {target: {value: password}});
         })
-            
-        await Promise.resolve(fireEvent.click(screen.getByTestId('submit')));
-        await Promise.resolve(console.log(screen.getByTestId('error')));
-    }) 
+          
+        Promise.resolve(fireEvent.click(screen.getByTestId('submit')));
+        expect(errorMsg).toBeEmptyDOMElement();
+    })
+    it('Test a wrong email/password combo', () => {
+        act(() => {
+            render(<SignIn test={true}/>);
+         });
+    })
 })
