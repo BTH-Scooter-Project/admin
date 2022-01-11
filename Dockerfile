@@ -1,11 +1,16 @@
 FROM node:16
 
-WORKDIR /app
-ENV PATH /app/node_modules/.bin:$PATH
+WORKDIR api
 
-COPY package*.json ./
+COPY ./package*.json ./
+
+RUN apt update && apt -y upgrade && apt -y dist-upgrade
+
 RUN npm install
 
-COPY . ./
+COPY ./ .
 
-CMD [ "npm", "start" ]
+EXPOSE 1338
+
+ENTRYPOINT [ "npm" ]
+CMD [ "start" ]

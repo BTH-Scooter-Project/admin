@@ -31,7 +31,9 @@
     "start": "PORT=1338 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coverage": "CI=true npm test -- --env=jsdom --coverage",
+    "e2e": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -43,5 +45,8 @@
     ">0.2%",
     "not dead",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "nyc": "^15.1.0"
+  }
 }

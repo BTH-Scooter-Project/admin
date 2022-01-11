@@ -1,13 +1,44 @@
-version: '3.7'
+version: "3"
 
+networks:
+    pattern_net:
+
+# använd: docker build -t neskoc/pattern:backend -f Dockerfile.api . 
 services:
-  admin:
-    container_name: adminAppCon
-    expose:
-      - "1339"
-    ports:
-      - "localhost:1339:3000"
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    restart:
-      "always"
+    backend:
+        image: neskoc/pattern:backend
+        container_name: "backend"
+        expose:
+            - "1337"
+        ports:
+            - "127.0.0.1:1337:1337"
+        networks:
+            - pattern_net
+        # volumes:
+        #    - ./api:/api
+        restart:
+            "always"
+
+    esc:
+        image: neskoc/pattern:esc
+        container_name: "esc"
+        ports:
+            - "127.0.0.1:8000:8000"
+        networks:
+            - pattern_net
+        links:
+            - backend
+        depends_on:
+            - backend
+
+    admin:
+        image: gusu20/admin-app:latest
+        container_name: "admin"
+        ports:
+            - "127.0.0.1:1338:1338"
+        networks:
+            - pattern_net
+        links:
+            - backend
+        depends_on:
+            - backend
