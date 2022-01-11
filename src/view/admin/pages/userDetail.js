@@ -5,9 +5,9 @@ import { BoxInfo } from "../components/styles";
 import { DashboardTemplate } from "../Dashboard";
 import axios from "axios";
 
-function UserDetailContent() {
+export function UserDetailContent({test = false, testid = -1}) {
     const history = useHistory();
-    const { id } = useParams();
+    let { id } = useParams();
     const data = JSON.parse(sessionStorage.getItem("apiCustomer"))[id];
     const [toggleEdit, setToggleEdit] = useState(false);
     const [firstname, setFirstname] = useState(data.firstname);

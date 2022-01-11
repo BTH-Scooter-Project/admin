@@ -1,3 +1,41 @@
+const customerData = {
+    data: [
+        {
+            "userid": 1,
+            "firstname": "Test",
+            "lastname": "User",
+            "password": "$2a$10$A3nR1z9LsJnbvKhwuuuThe5S4dt6fDzM/VTv2FddEAKYl2cDMBRtS",
+            "email": "test1@test.com",
+            "cityid": 2,
+            "payment": "card",
+            "balance": 500,
+            "unique_id": "1234567890"
+        },
+        {
+            "userid": 2,
+            "firstname": "Konrad",
+            "lastname": "Magnusson",
+            "password": "$2a$10$VtbmFuD6v5m3KHujohQZ8.xazF2JziA5uUSinttbKp53JH2EdKPzu",
+            "email": "test2@test.se",
+            "cityid": 1,
+            "payment": "card",
+            "balance": 100.5,
+            "unique_id": null
+        },
+        {
+            "userid": 3,
+            "firstname": "Harald",
+            "lastname": "Andersson",
+            "password": "$2a$10$VtbmFuD6v5m3KHujohQZ8.xazF2JziA5uUSinttbKp53JH2EdKPzu",
+            "email": "test@gmail.com",
+            "cityid": 3,
+            "payment": "prepaid",
+            "balance": 99,
+            "unique_id": null
+        },
+    ]
+}
+
 export const staffLogin = (data) => {
     const staff = {
         data: [
@@ -49,86 +87,15 @@ export const staffLogin = (data) => {
 }
 
 export const customer = (token) => {
-    const customer = {
-        data: [
-            {
-                "userid": 1,
-                "firstname": "Test",
-                "lastname": "User",
-                "password": "$2a$10$A3nR1z9LsJnbvKhwuuuThe5S4dt6fDzM/VTv2FddEAKYl2cDMBRtS",
-                "email": "test1@test.com",
-                "cityid": 2,
-                "payment": "card",
-                "balance": 500,
-                "unique_id": "1234567890"
-            },
-            {
-                "userid": 2,
-                "firstname": "Konrad",
-                "lastname": "Magnusson",
-                "password": "$2a$10$VtbmFuD6v5m3KHujohQZ8.xazF2JziA5uUSinttbKp53JH2EdKPzu",
-                "email": "test2@test.se",
-                "cityid": 1,
-                "payment": "card",
-                "balance": 100.5,
-                "unique_id": null
-            },
-            {
-                "userid": 3,
-                "firstname": "Harald",
-                "lastname": "Andersson",
-                "password": "$2a$10$VtbmFuD6v5m3KHujohQZ8.xazF2JziA5uUSinttbKp53JH2EdKPzu",
-                "email": "test@gmail.com",
-                "cityid": 3,
-                "payment": "prepaid",
-                "balance": 99,
-                "unique_id": null
-            },
-        ]
-    }
     if (token) {
-        return customer;
+        return customerData;
     }
 }
 
 export const removeCustomer = (id) => {
-    const customer = {
-        data: [
-            {
-                "userid": 1,
-                "firstname": "Test",
-                "lastname": "User",
-                "password": "$2a$10$A3nR1z9LsJnbvKhwuuuThe5S4dt6fDzM/VTv2FddEAKYl2cDMBRtS",
-                "email": "test1@test.com",
-                "cityid": 2,
-                "payment": "card",
-                "balance": 500,
-                "unique_id": "1234567890"
-            },
-            {
-                "userid": 2,
-                "firstname": "Konrad",
-                "lastname": "Magnusson",
-                "password": "$2a$10$VtbmFuD6v5m3KHujohQZ8.xazF2JziA5uUSinttbKp53JH2EdKPzu",
-                "email": "test2@test.se",
-                "cityid": 1,
-                "payment": "card",
-                "balance": 100.5,
-                "unique_id": null
-            },
-            {
-                "userid": 3,
-                "firstname": "Harald",
-                "lastname": "Andersson",
-                "password": "$2a$10$VtbmFuD6v5m3KHujohQZ8.xazF2JziA5uUSinttbKp53JH2EdKPzu",
-                "email": "test@gmail.com",
-                "cityid": 3,
-                "payment": "prepaid",
-                "balance": 99,
-                "unique_id": null
-            },
-        ]
-    }
+    return customerData.data.filter(function(e){return e.userid !== id})
+}
 
-    return customer.data.filter(function(e){return e.userid !== id})
+export const customerDetail = (id) => {
+    return customerData.data.filter(function(e){return e.userid === id})
 }

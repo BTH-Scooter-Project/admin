@@ -2,3 +2,5 @@
 'npm install' - Installerar nödvändiga dependencies.  
 'npm start' - Startar appen.  
 'npm build' - Optimerar och startar appen.
+
+[![Build Status](https://scrutinizer-ci.com/g/gurkan444/test/badges/build.png?b=main)](https://scrutinizer-ci.com/g/gurkan444/test/build-status/main)

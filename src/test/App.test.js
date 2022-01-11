@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import { act } from "react-dom/test-utils"
 import SignIn from "../view/login";
 import { UserContent } from "../view/admin/pages/user";
+import { UserDetailContent } from "../view/admin/pages/userDetail";
 
 const email = "test@test.se";
 const password = "test123";
@@ -83,7 +84,6 @@ describe("Display customers", () => {
         expect(screen.getByText("Removed user")).toBeInTheDocument(); 
     })
     it('Move on to the details page', async () => {
-        history.push = jest.fn();
         act(() => {
             render(<UserContent test={true} noData={false} />);
         })
@@ -91,5 +91,10 @@ describe("Display customers", () => {
         expect(screen.getAllByTestId('VisibilityIcon'));
         fireEvent.click(screen.getAllByTestId('VisibilityIcon')[0]);
         expect(screen.getByText("Details of user")).toBeInTheDocument();
+    })
+})
+
+describe("Customer details", () => {
+    it("Check if page is rendered correctly", async () => {
     })
 })

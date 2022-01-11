@@ -34,7 +34,7 @@ const remove = (id) => {
 
 
 
-export function UserContent({test = true, noData = false}) {
+export function UserContent({test = false, noData = false}) {
     const history = useHistory();
     const [deleteStatus, setDeleteStatus] = useState(null);
     const [detailStatus, setDetailStats] = useState(null);
