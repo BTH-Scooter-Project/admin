@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import { render, fireEvent, cleanup, screen, waitFor, getByTestId } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import { act } from "react-dom/test-utils"
@@ -96,5 +97,36 @@ describe("Display customers", () => {
 
 describe("Customer details", () => {
     it("Check if page is rendered correctly", async () => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <UserDetailContent test={true} testid={1} />
+                    </Route>
+                </Router>
+            )
+        })
+        expect(screen.getByText("1"));
+        expect(screen.getByText("Test"));
+        expect(screen.getByText("User"));
+        expect(screen.getAllByText("2"));
+        expect(screen.getByText("card"));
+        expect(screen.getByText("500"));
+        expect(screen.getByTestId("EditIcon")).toBeInTheDocument();
+    })
+
+    it("Test submit changes to user's data", async () => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <UserDetailContent test={true} testid={1} />
+                    </Route>
+                </Router>
+            )
+        })
+        await Promise.resolve(fireEvent.click(screen.getByTestId("EditIcon")));
+        expect(screen.getAllByRole('textbox')).toHaveLength(5);
+
     })
 })

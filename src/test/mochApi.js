@@ -90,7 +90,7 @@ export const customer = (token) => {
     if (token) {
         return customerData;
     } else {
-        return;
+        return null;
     }
 }
 
