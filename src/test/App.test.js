@@ -1,10 +1,14 @@
 import React from "react";
-import { render, fireEvent, cleanup, screen, waitFor, getByTestId } from "@testing-library/react";
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import { render, fireEvent, screen } from "@testing-library/react";
 import '@testing-library/jest-dom';
 import { act } from "react-dom/test-utils"
 import SignIn from "../view/login";
 import { UserContent } from "../view/admin/pages/user";
 import { UserDetailContent } from "../view/admin/pages/userDetail";
+import { CityContent } from "../view/admin/pages/city";
+import { StationContent } from "../view/admin/pages/station";
+import { ScooterContent } from "../view/admin/pages/scooter";
 
 const email = "test@test.se";
 const password = "test123";
@@ -95,6 +99,135 @@ describe("Display customers", () => {
 })
 
 describe("Customer details", () => {
+    let textbox;
     it("Check if page is rendered correctly", async () => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <UserDetailContent test={true} testid={1} />
+                    </Route>
+                </Router>
+            )
+        })
+        expect(screen.getByText("1"));
+        expect(screen.getByText("Test"));
+        expect(screen.getByText("User"));
+        expect(screen.getAllByText("2"));
+        expect(screen.getByText("card"));
+        expect(screen.getByText("500"));
+        expect(screen.getByTestId("EditIcon")).toBeInTheDocument();
+    })
+
+    it("Test submit changes to user's data", async () => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <UserDetailContent test={true} testid={1} />
+                    </Route>
+                </Router>
+            )
+        })
+        
+        Promise.resolve(fireEvent.click(screen.getByTestId("EditIcon")))
+
+        act(() => {
+            textbox = screen.getAllByRole('textbox');
+        })
+        
+        expect(textbox).toHaveLength(5);
+
+        act(() => {
+            fireEvent.change(textbox[0], {target: { value: "Test"}});
+            fireEvent.change(textbox[1], {target: {value: "Testsson"}});
+            fireEvent.change(textbox[2], {target: {value: "1"}});
+            fireEvent.change(textbox[3], {target: {value: "prepaid"}});
+            fireEvent.change(textbox[4], {target: {value: "420"}});
+        })
+
+        await Promise.resolve(fireEvent.click(screen.getByText("Submit")));
+        expect(screen.getByText("Data submited")).toBeInTheDocument();
+    })
+})
+
+describe("Get scooters", () => {
+    it("Loading cities", async () => {
+        act(() => {
+            render(<CityContent test={true} />);
+        })
+
+        expect(screen.getByRole("table")).toBeInTheDocument();
+        expect(screen.getByTestId("thead").children).toHaveLength(3);
+        expect(screen.getByText("Sundsvall")).toBeInTheDocument();
+        expect(screen.getAllByTestId("VisibilityIcon")[0]);
+
+        await Promise.resolve(fireEvent.click(screen.getAllByTestId("VisibilityIcon")[0]));
+        expect(screen.getByText("Redirecting...")).toBeInTheDocument();
+    })
+
+    it("Loading stations", async () => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <StationContent test={true} />
+                    </Route>
+                </Router>
+            )
+        })
+
+        expect(screen.getByRole('grid')).toBeInTheDocument();
+        expect(screen.getAllByRole('columnheader')).toHaveLength(5);
+        expect(screen.getByText("Centrum")).toBeInTheDocument();
+        expect(screen.getAllByTestId('VisibilityIcon'));
+    })
+
+    it('Check if table renders without data', async() => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <StationContent test={true} noData={true} />
+                    </Route>
+                </Router>
+            )
+        })
+
+        expect(screen.getByRole('grid')).toBeInTheDocument();
+        expect(screen.getAllByRole('columnheader')).toHaveLength(5);
+        expect(screen.getByText("No rows")).toBeInTheDocument();
+    })
+
+    it("Loading scooters", async () => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <ScooterContent test={true} />
+                    </Route>
+                </Router>
+            )
+        })
+
+        expect(screen.getByRole('grid')).toBeInTheDocument();
+        expect(screen.getAllByRole('columnheader')).toHaveLength(7);
+        expect(screen.getAllByText("En rosa cykel"));
+    })
+
+    it('Check if table renders without data', async() => {
+        act(() => {
+            render(
+                <Router>
+                    <Route>
+                        <ScooterContent test={true} noData={true} />
+                    </Route>
+                </Router>
+            )
+        })
+
+        expect(screen.getByRole('grid')).toBeInTheDocument();
+        expect(screen.getAllByRole('columnheader')).toHaveLength(7);
+        expect(screen.getByText("No rows")).toBeInTheDocument();
     })
 })

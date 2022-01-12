@@ -108,9 +108,12 @@ export function UserContent({test = false, noData = false}) {
           },
       ];
     let { data } = useSWR('user', fetcher);
+
     if (test && !noData) {
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5zZSIsImlkIjoxLCJpYXQiOjE2NDE4NDc4ODYsImV4cCI6MTY0MTg1MTQ4Nn0.f81pLrv0HddpfOdGwSRFyPFf4Ln5b0vnrX7Ev_ODuck";
         data = customer(token).data;
+    } else if (test && noData) {
+        data = [];
     }
 
     const pageSize = 15;

@@ -2,10 +2,20 @@ import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { DashboardTemplate } from "../Dashboard";
 import { useParams } from 'react-router';
+import { scooter } from '../../../test/mochApi';
 
-function ScooterContent() {
-    const id = useParams();
-    const data = JSON.parse(sessionStorage.getItem('apiStation'))[id.id].bikes;
+export function ScooterContent({test = false, noData = false}) {
+    const { id } = useParams();
+    let data;
+
+    if (!test) {
+      data = JSON.parse(sessionStorage.getItem('apiStation'))[id].bikes;
+    } else if (test && !noData) {
+      data = scooter().data;
+    } else {
+      data = [];
+    }
+
     const pageSize = 15;
     const columns = [
         { field: 'bikeid', headerName: 'BikeID', width: 90 },
@@ -54,6 +64,7 @@ function ScooterContent() {
                         columns={columns}
                         rows={data || []}
                         getRowId={(row) => row.bikeid}
+                        columnBuffer={7}
                     />
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import  { useHistory } from 'react-router-dom';
 import useSWR from 'swr';
@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { DashboardTemplate } from "../Dashboard";
+import { city } from '../../../test/mochApi';
 
 const fetcher = async () => {
     const response = await axios.get('http://localhost:1337/v1/city?apiKey=90301a26-894c-49eb-826d-ae0c2b22a405', {
@@ -21,16 +22,22 @@ const fetcher = async () => {
     return data
 }
 
-function CityContent() {
-    const { data } = useSWR('scooter', fetcher);
+export function CityContent({test = false}) {
     const history = useHistory();
+    const [redirect, setRedirect] = useState(null);
+    let { data } = useSWR('scooter', fetcher);
+
+    if (test) {
+        data = city().data;
+    }
 
     return (
         <>
+            <span>{redirect}</span>
             <h1 align="center">Cities</h1>
             <Table>
                 <TableHead>
-                    <TableRow>
+                    <TableRow data-testid="thead">
                         <TableCell>CityID</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Actions</TableCell>
@@ -43,7 +50,11 @@ function CityContent() {
                             <TableCell>{row.name}</TableCell>
                             <TableCell>
                                 <VisibilityIcon cursor="pointer" onClick={() => {
+                                    if (!test) {
                                         history.push(`/dashboard/scooter/city/${row.cityid}`);
+                                    } else {
+                                        setRedirect("Redirecting...");
+                                    }
                                     }}/>
                            </TableCell>
                        </TableRow>

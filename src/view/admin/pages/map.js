@@ -46,8 +46,7 @@ const fetcher = async (id) => {
 
 }
 
-
-function MapContent() {
+export function MapContent() {
     const [id, setId] = useState(1);
     const { data } = useSWR(id, fetcher);
 
