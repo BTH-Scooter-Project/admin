@@ -32,10 +32,23 @@ services:
             - backend
 
     admin:
-        image: gusu20/admin-app:latest
+        image: gusu20/admin-app
         container_name: "admin"
         ports:
             - "127.0.0.1:1338:1338"
+        networks:
+            - pattern_net
+        links:
+            - backend
+        depends_on:
+            - backend
+        stdin_open: true
+
+    app:
+        image: orkanen/myapp:latest
+        container_name: "app"
+        ports:
+            - "127.0.0.1:1339:1339"
         networks:
             - pattern_net
         links:

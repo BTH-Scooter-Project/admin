@@ -8,7 +8,7 @@ import WarningIcon from '@mui/icons-material/Warning';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useHistory } from "react-router-dom";
 
-function MaintenenceContent() { 
+export function MaintenenceContent() { 
     const [cityid, setCityId] = useState(-1);
     const [bikes, setBikes] = useState([]); 
     const [city, setCity] = useState([]);

@@ -16,9 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import {mainListItems } from './components/listItems';
 import {Redirect, useHistory} from "react-router-dom";
-import { BoxStat } from './components/styles';
 import { Button } from '@mui/material';
-//import 'leaflet/dist/leaflet.css';
 
 const drawerWidth = 240;
 
@@ -163,34 +161,7 @@ export function DashboardTemplate({component: Component}) {
 function DashboardContent() {
   return(
     <>
-      <Box sx={{ width: '100%'}} >
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 2, sm: 2, md: 2 }} align="center">
-          <Grid item xs={6}>
-              <BoxStat>
-                <h2>10</h2>
-                <p>gewt</p>
-              </BoxStat>
-          </Grid>
-          <Grid item xs={6}>
-          <BoxStat>
-                <h2>10</h2>
-                <h3>Users</h3>
-              </BoxStat>
-          </Grid>
-          <Grid item xs={6}>
-          <BoxStat>
-                <h2>10</h2>
-                <h3>Users</h3>
-              </BoxStat>
-          </Grid>
-          <Grid item xs={6}>
-            <BoxStat>
-                <h2>10</h2>
-                <h3>Users</h3>
-            </BoxStat>
-          </Grid>
-        </Grid>
-    </Box>
+      <h1 align="center">Welcome {sessionStorage.getItem('user')}</h1>
     </>
   );
 }
