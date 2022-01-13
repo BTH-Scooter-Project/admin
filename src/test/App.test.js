@@ -9,7 +9,6 @@ import { UserDetailContent } from "../view/admin/pages/userDetail";
 import { CityContent } from "../view/admin/pages/city";
 import { StationContent } from "../view/admin/pages/station";
 import { ScooterContent } from "../view/admin/pages/scooter";
-import { MapContent } from "../view/admin/pages/map";
 import Maintenence, { MaintenenceContent } from "../view/admin/pages/maintenence";
 
 const email = "test@test.se";
